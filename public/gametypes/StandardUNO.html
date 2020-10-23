@@ -12,7 +12,7 @@
                 <tr v-for="player of Object.values(gameObject.players)" :key="player.uuid" :class="`${(player.turn) ? 'currently-playing-tr' : 'not-currently-playing-tr'}`">
                     <td class="pt-3-half" contenteditable="false">
                         {{ player.name }}
-                        <img src="/assets/arrow.svg" :class="`${(player.turn) ? ((gameObject.direction) ? 'arrow-down' : 'arrow-up') : ''}`">
+                        <img v-if="player.turn" src="/assets/arrow.svg" :class="`${(gameObject.direction) ? 'arrow-down' : 'arrow-up'}`">
                     </td>
                 </tr>
             </tbody>
