@@ -1,0 +1,71 @@
+<div class="main-game-container">
+    <div class="table-editable player-table">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th class="text-center">Name {{ (gameObject.started) ? `${gameObject.playCardMessage1} ${gameObject.currentPlayerName} ${gameObject.playCardMessage2}` : gameObject.waitMessage }}
+                        <button v-if="host && !gameObject.started" type="button" class="btn btn-primary btn-sm" onclick="data.gameObject.start()">Start game</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="player of Object.values(gameObject.players)" :key="player.uuid" :class="`${(player.turn) ? 'currently-playing-tr' : 'not-currently-playing-tr'}`">
+                    <td class="pt-3-half" contenteditable="false">
+                        {{ player.name }}
+                        <img src="/assets/arrow.svg" :class="`${(player.turn) ? ((gameObject.direction) ? 'arrow-down' : 'arrow-up') : ''}`">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="big-card-container">
+        <img :src="gameObject.topCard.getImage()" class="big-card">
+    </div>
+</div>
+<div class="jumbotron cards-panel">
+    <h2 class="display-6">
+        Your cards
+    </h2>
+    <div class="cards-flexbox">
+        <img v-for="card of gameObject.cards" :src="card.getImage()" :class="`card ${(gameObject.started && gameObject.turn) ? 'enabled-card' : 'disabled-card'}`" :onclick="`data.gameObject.play([${card.type},${card.color},'${card.modifier}'])`">
+    </div>
+</div>
+<div id="colorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="colorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="colorModalLabel">Choose the color</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div v-if="gameObject.modalWild" class="modal-body color-card-container">
+                <img src="/assets/cards/uno_wild_red.svg" class="color-card" onclick="data.gameObject.play([1, 0, 'wild'])">
+                <img src="/assets/cards/uno_wild_yellow.svg" class="color-card" onclick="data.gameObject.play([1, 1, 'wild'])">
+                <img src="/assets/cards/uno_wild_green.svg" class="color-card" onclick="data.gameObject.play([1, 2, 'wild'])">
+                <img src="/assets/cards/uno_wild_blue.svg" class="color-card" onclick="data.gameObject.play([1, 3, 'wild'])">
+            </div>
+            <div v-else class="modal-body color-card-container">
+                <img src="/assets/cards/uno_draw4_red.svg" class="color-card" onclick="data.gameObject.play([2, 0, 'draw4'])">
+                <img src="/assets/cards/uno_draw4_yellow.svg" class="color-card" onclick="data.gameObject.play([2, 1, 'draw4'])">
+                <img src="/assets/cards/uno_draw4_green.svg" class="color-card" onclick="data.gameObject.play([2, 2, 'draw4'])">
+                <img src="/assets/cards/uno_draw4_blue.svg" class="color-card" onclick="data.gameObject.play([2, 3, 'draw4'])">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="winnerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="winnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="winnerModalLabel">Winner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body color-card-container">
+                <h2 class="display-4">{{ gameObject.winner }} wins!</h2>
+            </div>
+        </div>
+    </div>
+</div>

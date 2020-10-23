@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>UNO</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+
+        <script type="text/javascript" src="/js/bootstrap/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap/popper.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap/mdb.min.js"></script>
+
+        <script src="/gametypes/StandardUNO.js"></script>
+
+        <script src="/js/game.js"></script>
+
+        <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap/mdb.min.css" rel="stylesheet">
+        <link href="/css/darkly.min.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="gameContainer" class="fullscreen">
+            
+        </div>
+        <div id="nameModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="winnerModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="winnerModalLabel">Enter your name</h5>
+                    </div>
+                    <div class="modal-body color-card-container">
+                        <div class="md-form">
+                            <input type="text" id="nameModalBox" class="form-control">
+                            <label for="nameModalBox">Name</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="data.name = $('#nameModalBox')[0].value; updatePlayerData();" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
